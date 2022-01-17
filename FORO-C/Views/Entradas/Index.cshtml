@@ -1,0 +1,65 @@
+﻿@model IEnumerable<FORO_C.Models.Entrada>
+@inject SignInManager<Usuario> signInManager
+
+@{
+    ViewData["Title"] = "Entradas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsInRole("UsuarioStandard"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+}
+    
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Miembro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Privada)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Preguntas" asp-action="Index" asp-route-idEntrada="@item.Id">@Html.DisplayFor(modelItem => item.Titulo)</a>
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Miembro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Privada)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

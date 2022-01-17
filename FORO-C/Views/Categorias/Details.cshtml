@@ -1,0 +1,55 @@
+﻿@model FORO_C.Models.Categoria
+@inject UserManager<Usuario> userManager
+
+@{
+    ViewData["Title"] = @Model.Nombre;
+    int userIdActual = Int32.Parse(userManager.GetUserId(User));
+}
+
+<h1>@Model.Nombre</h1>
+
+<div>
+    <h5>Preguntas</h5>
+    <table class="table">
+        <tbody>
+            @if (Model.Entradas != null)
+            {
+                @foreach (var entrada in Model.Entradas)
+                {
+                <td>
+                    @Html.DisplayFor(modelItem => entrada.Titulo)
+                </td>
+                <td>
+                    @{
+                        
+                        string condicion = entrada.MiembroEstaHabilitado(userIdActual);
+                        if (entrada.MiembroId == userIdActual || !entrada.Privada || condicion == "Habilitado")
+                        {
+
+                            <a asp-controller="Entradas" asp-action="Details" asp-route-id="@entrada.Id">Ver</a>
+                        
+                    }
+                    else if(condicion == "No habilitado")
+                    {
+
+                        <a asp-controller="Entradas" asp-action="AgregarMiembroParaHabilitar" asp-route-CategoriaId="@Model.Id" asp-route-EntradaId="@entrada.Id">Pedir Habilitacion</a>
+
+                    } else
+                    {
+                        <a asp-controller="Entradas" asp-action="AnularMiembroParaHabilitar" asp-route-CategoriaId="@Model.Id" asp-route-EntradaId="@entrada.Id">Anular Habilitacion</a>
+                    }
+                 }
+                </td>
+
+
+                    }
+                    }
+                    </tbody>
+                </table>
+    </div>
+    <div>
+        <a asp-controller="Entradas" asp-action="Create" asp-route-CategoriaId="@Model.Id">Crear Entrada</a>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>

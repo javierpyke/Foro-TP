@@ -1,0 +1,35 @@
+﻿@model Miembro
+@{
+    ViewData["Title"] = "MisEntradas";
+}
+
+<h1>MisEntradas</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Entradas
+            </th>
+            <th>
+                Preguntas
+            </th>
+        </tr>
+    </thead>
+    @foreach (Entrada entrada in Model.EntradasPropias)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    <a asp-controller="Entradas" asp-action="Ver" asp-route-id="@entrada.Id">@entrada.Titulo</a>
+                </td>
+                <td>
+                    @entrada.Preguntas.Count()
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+            
+

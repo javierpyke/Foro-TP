@@ -1,0 +1,54 @@
+﻿model IEnumerable<FORO_C.Models.Respuesta>
+
+    @{
+        ViewData["Title"] = "Listado de Respuestas";
+    }
+
+    <h1>@ViewData["Title"]</h1>
+
+    <p>
+        <a asp-action="Create">Crear nueva</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Descripcion
+                </th>
+                <th>
+                    Pregunta
+                </th>
+                <th>
+                    Usuario
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Respuesta respuesta in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => respuesta.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => respuesta.Pregunta.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => respuesta.Miembro.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => respuesta.Fecha)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@respuesta.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@respuesta.Id">Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@respuesta.Id">Borrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -1,0 +1,76 @@
+﻿@inject SignInManager<Usuario> signInManager
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+
+    @if (!ViewBag.existeAdmin)
+    {
+        <a class="btn btn-3 " asp-action="Seed" asp-controller="Precarga">Precargar informacion</a>
+    }
+
+    <h1 class="display-4">Bienvenido al Foro</h1>
+
+    @if (!signInManager.IsSignedIn(User))
+    {
+        <p>Para poder navegar por el Foro necesitas estar registrado.</p>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Registraciones" asp-action="registrar">Registrarse</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Registraciones" asp-action="iniciarSesion">Iniciar Sesion</a>
+    }
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Últimas 5 entradas cargadas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var entrada in ViewBag.UltEntradasCargadas)
+        {
+            <tr>
+                <td><a asp-controller="Entradas" asp-action="Ver" asp-route-Id=@entrada.Id>@entrada.Titulo</a></td>
+            </tr>
+        }
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Las 5 Entradas con más preguntas y respuestas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var entrada in ViewBag.EntradasOrdenadas)
+        {
+            <tr>
+                <td><a asp-controller="Entradas" asp-action="Ver" asp-route-Id=@entrada.Id>@entrada.Titulo</a></td>
+            </tr>
+        }
+    </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Los 3 Miembros con mas entradas cargadas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var miembro in ViewBag.top3Miembros)
+        {
+            <tr>
+                <td>@miembro</td>
+            </tr>
+        }
+    </table>
+
+
+</div>
+

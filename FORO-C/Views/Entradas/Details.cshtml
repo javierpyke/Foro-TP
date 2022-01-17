@@ -1,0 +1,75 @@
+﻿@model FORO_C.Models.Entrada
+@inject UserManager<Usuario> userManager
+
+@{
+    ViewData["Title"] = @Model.Titulo;
+    int userIdActual = Int32.Parse(userManager.GetUserId(User));
+}
+
+<h1>@Model.Titulo</h1>
+
+<div>
+    @if(Model.MiembroId == userIdActual){
+        <h5>Miembros para habilitar</h5>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        @foreach(MiembrosEntradas miembroEntrada in Model.MiembrosHabilitados)
+                        {
+                            if (!miembroEntrada.Habilitado)
+                            {
+                                <p>@miembroEntrada.Miembro.Email</p> <a asp-controller="Entradas" asp-action="HabilitarUsuario" asp-route-EntradaId="@miembroEntrada.EntradaId" asp-route-MiembroId="@miembroEntrada.MiembroId">Habilitar</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    <h4>Categoria: @Model.Categoria.Nombre</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    Creador: @Html.DisplayFor(modelItem => Model.Miembro.Email)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    Preguntas
+                </td>
+                <td>
+                    Cant. Respuestas
+                </td>
+            </tr>            
+            @if (Model.Preguntas != null)
+            {
+                @foreach (var pregunta in Model.Preguntas)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => pregunta.Descripcion)
+                        </td>
+                        <td>
+                            @pregunta.CantidadDeRespuestas
+                        </td>
+                        <td>
+                            <a asp-controller="Preguntas" asp-action="Details" asp-route-id="@pregunta.Id">Ver</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    </div>
+<div>
+    <a asp-controller="Preguntas" asp-action="Create" asp-route-EntradaId="@Model.Id">Crear Pregunta</a>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

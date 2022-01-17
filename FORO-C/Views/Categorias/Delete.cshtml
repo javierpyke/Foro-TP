@@ -1,0 +1,32 @@
+﻿@model FORO_C.Models.Categoria
+
+@{
+    ViewData["Title"] = "Eliminar categoría";
+}
+
+<h1>@ViewData["Title"] '@Html.DisplayName(Model.Nombre)'</h1>
+
+<h3>@Alias.AliasGUI.SureToDelete</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            Cantidad de @Html.DisplayNameFor(model => model.Entradas)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Entradas.Count()
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">@Alias.AliasGUI.BackToList</a>
+    </form>
+</div>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FORO_C.Models.Categoria>
+@inject UserManager<Usuario> userManager
+
+@{
+    ViewData["Title"] = "Listado de categorías";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a class="btn btn-1" asp-action="Create">Crear una nueva categoria</a>
+</p>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    Entradas
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <a asp-controller="Categorias" asp-action="Ver" asp-route-Id="@item.Id"> @Html.DisplayFor(modelItem => item.Nombre)</a>
+                </td>
+                <td>
+                    @item.Entradas.Count()
+                </td>
+                @if (User.IsInRole("Administrador"))
+                {
+                
+                <td>
+                    <a asp-controller="Categorias" asp-action="Delete" asp-route-id="@item.Id">@Alias.AliasGUI.Delete</a>
+                </td>
+                }
+            </tr>
+            }
+
+
+
+        </tbody>
+    </table>
+}
+else
+{
+    <h4 class="html" style="text-align:center">¡Todavía no hay Categorías creadas!</h4>
+}

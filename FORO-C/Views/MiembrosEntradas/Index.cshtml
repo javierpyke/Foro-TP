@@ -1,0 +1,49 @@
+﻿@model IEnumerable<FORO_C.Models.MiembrosEntradas>
+
+@{
+    ViewData["Title"] = "Relaciones Miembro-Entrada";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Crear nueva relación</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Miembro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entrada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habilitado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Miembro.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entrada.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Habilitado)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", "MiembrosEntradas", new { mId = item.MiembroId, eId = item.EntradaId }) |
+                @Html.ActionLink("Detalles", "Details", "MiembrosEntradas", new { mId = item.MiembroId, eId = item.EntradaId }) |
+                @Html.ActionLink("Borrar", "Delete", "MiembrosEntradas", new { mId = item.MiembroId, eId = item.EntradaId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FORO-C", "FORO-C.csproj", "{5A1278EE-DCCB-41C8-BA53-08D083283DC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A1278EE-DCCB-41C8-BA53-08D083283DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1278EE-DCCB-41C8-BA53-08D083283DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1278EE-DCCB-41C8-BA53-08D083283DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1278EE-DCCB-41C8-BA53-08D083283DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CD33F6D-3250-4E50-B312-D00577BB0D15}
+	EndGlobalSection
+EndGlobal

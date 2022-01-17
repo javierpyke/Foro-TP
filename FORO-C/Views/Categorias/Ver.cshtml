@@ -1,0 +1,86 @@
+﻿@model FORO_C.Models.Categoria
+@inject UserManager<Usuario> userManager
+
+
+@{
+    ViewData["Title"] = @Model.Nombre;
+    int userIdActual = Int32.Parse(userManager.GetUserId(User));
+}
+
+<h1>@Model.Nombre</h1>
+
+<div>
+    <h5>Entradas</h5>
+
+    @if (User.IsInRole("UsuarioStandard"))
+    {
+        <div>
+            <a class="btn btn-1" asp-controller="Entradas" asp-action="Create" asp-route-CategoriaId="@Model.Id">Crear Entrada</a>
+        </div>
+    }
+
+
+
+    <table class="table">
+        <tbody>
+            @if (Model.Entradas != null)
+            {
+                @foreach (var entrada in Model.Entradas)
+                {
+
+
+            <tr>
+                @{
+
+
+                    string condicion = entrada.MiembroEstaHabilitado(userIdActual);
+                    if (entrada.MiembroId == userIdActual || !entrada.Privada || condicion == "Habilitado")
+                    {
+
+                        <td>
+                            <a asp-controller="Entradas" asp-action="Ver" asp-route-id="@entrada.Id">@Html.DisplayFor(modelItem => entrada.Titulo)</a>
+                        </td>
+                        if (User.IsInRole("Administrador"))
+                        {
+                           
+                            <td>
+                                <a asp-controller="Entradas" asp-action="Delete" asp-route-id="@entrada.Id">Eliminar</a>
+                            </td>
+
+                        }
+
+                    }
+                    else if (condicion == "No habilitado")
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => entrada.Titulo)
+                        </td>
+                        <td>
+                            <a asp-controller="Entradas" asp-action="AgregarMiembroParaHabilitar" asp-route-CategoriaId="@Model.Id" asp-route-EntradaId="@entrada.Id">Pedir Habilitacion</a>
+                        </td>
+
+
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => entrada.Titulo)
+                        </td>
+                        <td>
+                            <a asp-controller="Entradas" asp-action="AnularMiembroParaHabilitar" asp-route-CategoriaId="@Model.Id" asp-route-EntradaId="@entrada.Id">Anular Habilitacion</a>
+                        </td>
+
+                    }
+                }
+            </tr>
+
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>

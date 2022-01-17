@@ -1,0 +1,47 @@
+﻿@model FORO_C.Models.Entrada
+
+@{
+
+    ViewData["Title"] = "Crear Entrada";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoriaId" class="control-label"></label>
+                <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
+            </div>
+            <div>
+                ¿No la encontrás? <a asp-controller="Categorias" asp-action="Create" > ¡Agregá una nueva categoría!</a>
+            </div>
+            <br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Privada" /> @Html.DisplayNameFor(model => model.Privada)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear entrada" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@Alias.AliasGUI.Back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

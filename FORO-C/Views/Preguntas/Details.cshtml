@@ -1,0 +1,138 @@
+﻿@model FORO_C.Models.Pregunta
+@inject UserManager<Usuario> userManager
+@inject SignInManager<Usuario> signInManager
+
+
+@{
+    var respuestasConMasMeGusta = @ViewBag.RespuestaMasMeGusta;
+    var respuestasConMasNoMeGusta = @ViewBag.RespuestaMasNoMeGusta;
+    int userId = Int32.Parse(userManager.GetUserId(User));
+    ViewData["Title"] = Model.Descripcion;
+    ViewData["SinRespuestas"] = "Todavía nadie respondió esta pregunta.";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+
+<div>
+    <h4>Entrada: @Model.Entrada.Titulo</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    Creador: @Html.DisplayFor(modelItem => Model.Miembro.Email)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @{
+        if (!Model.Respuestas.Any())
+        {
+
+
+            <h3 style="text-align:center; padding:25px 25px ">@ViewData["SinRespuestas"]<br /></h3>
+
+
+            if (!User.IsInRole("Administrador") && Model.Activa)
+            {
+                <h3 style="text-align:center; padding:25px 25px ">¡Podés ser el primero!<br /></h3>
+            }
+
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>Autor</th>
+                        <th>Fecha</th>
+                        <th>Me Gusta</th>
+                        <th>No Me Gusta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var respuesta in Model.Respuestas)
+                    {
+                        var estilo = "";
+                        @if (respuestasConMasNoMeGusta.Contains(respuesta))
+                        {
+                            estilo = "btn-danger";
+                        }
+                        else if (respuestasConMasMeGusta.Contains(respuesta))
+                        {
+                            estilo = "btn-success";
+                        }
+
+                        <tr class=@estilo>
+                            <td>
+                                @Html.DisplayFor(modelItem => respuesta.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => respuesta.Miembro.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => respuesta.Fecha)
+                            </td>
+                            <td>
+                                @respuesta.cantidadDeReacciones()[0]
+                            </td>
+                            <td>
+                                @respuesta.cantidadDeReacciones()[1]
+                            </td>
+                            <td>
+                                @{
+                                    if (userId != respuesta.MiembroId && User.IsInRole("UsuarioStandard"))
+                                    {
+                                        var valorReaccion = respuesta.getReaccionUsuario(userId);
+                                        if (valorReaccion == 0)
+                                        {
+                                            <a asp-controller="Reacciones" asp-action="AgregarReaccion" asp-route-MeGusta=1 asp-route-Respuestaid="@respuesta.Id" asp-route-PreguntaId="@respuesta.PreguntaId">Me Gusta</a>
+                                            <a asp-controller="Reacciones" asp-action="AgregarReaccion" asp-route-MeGusta=-1 asp-route-Respuestaid="@respuesta.Id" asp-route-PreguntaId="@respuesta.PreguntaId">No Me Gusta</a>
+                                        }
+                                        else if (valorReaccion == 1)
+                                        {
+                                            <a asp-controller="Reacciones" asp-action="QuitarReaccion" asp-route-Respuestaid="@respuesta.Id" asp-route-PreguntaId="@respuesta.PreguntaId">Quitar Me Gusta</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Reacciones" asp-action="QuitarReaccion" asp-route-Respuestaid="@respuesta.Id" asp-route-PreguntaId="@respuesta.PreguntaId">Quitar No Me Gusta</a>
+                                        }
+                                    }
+                                    else if (userId == respuesta.MiembroId)
+                                    {
+                                        <a asp-controller="Respuestas" asp-action="edit" asp-route-Id="@respuesta.Id">Editar</a>
+                                    }
+                                }
+
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+
+    }
+
+
+</div>
+
+<div>
+    @if (Model.MiembroId != userId && Model.Activa && User.IsInRole("UsuarioStandard"))
+    {
+        <a class="btn btn-1" asp-controller="Respuestas" asp-action="Create" asp-route-PreguntaId="@Model.Id"> Responder </a>
+    }
+
+    <br />
+    <a asp-controller="Entradas" asp-action="Ver" asp-route-id="@Model.EntradaId">Volver a la lista</a>
+</div>
+@if (userId == Model.MiembroId)
+{
+    <div>
+        <a asp-controller="Preguntas" asp-action="edit" asp-route-id="@Model.Id">Editar Pregunta</a>
+    </div>
+}

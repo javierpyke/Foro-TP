@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>FORO_C</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20211018020131_Inicial.cs" />
+    <Compile Remove="Migrations\20211018020131_Inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211020040158_migracion.inicial.cs" />
+    <Compile Remove="Migrations\20211020040158_migracion.inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211020051350_migracion.inicial.cs" />
+    <Compile Remove="Migrations\20211020051350_migracion.inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211021011540_migracion.inicial.cs" />
+    <Compile Remove="Migrations\20211021011540_migracion.inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211021123522_migracion_inicial.cs" />
+    <Compile Remove="Migrations\20211021123522_migracion_inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211021210740_migracion_inicial.cs" />
+    <Compile Remove="Migrations\20211021210740_migracion_inicial.Designer.cs" />
+    <Compile Remove="Migrations\20211104231738_Miembro.cs" />
+    <Compile Remove="Migrations\20211104231738_Miembro.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+</Project>

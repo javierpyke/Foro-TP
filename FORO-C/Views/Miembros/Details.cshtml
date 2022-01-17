@@ -1,0 +1,53 @@
+﻿@model FORO_C.Models.Miembro
+@inject UserManager<Usuario> userManager
+
+@{
+    ViewData["Title"] = "Detalles de miembro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Apellido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Apellido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">@Alias.AliasGUI.Edit</a> |
+    @if (User.IsInRole("Administrador"))
+    {
+        <a asp-action="Index">@Alias.AliasGUI.BackToList</a>
+
+    }
+    else
+    {
+        <a asp-controller="Home" asp-action="Index">@Alias.AliasGUI.Back</a>
+
+    }
+</div>

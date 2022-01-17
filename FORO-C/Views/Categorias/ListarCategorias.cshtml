@@ -1,0 +1,31 @@
+﻿@model IEnumerable<FORO_C.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Entradas por categoria";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <tbody>
+        @foreach (var categoria in Model)
+        {
+            <tr>
+                <th>
+                    <a asp-controller="Categorias" asp-action="Ver" asp-route-id="@categoria.Id">Categoria: @Html.DisplayFor(modelItem => categoria.Nombre)</a>
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var entrada in categoria.Entradas)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Entradas" asp-action="Ver" asp-route-id="@entrada.Id">@Html.DisplayFor(modelItem => entrada.Titulo)</a>
+                    </td>
+                    <th></th>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
